@@ -1,0 +1,15 @@
+# Regras do Frontend
+web/node_modules
+web/dist
+web/.vite
+web/.env
+
+# Regras do Backend
+server/node_modules
+server/.env
+
+# Logs gerais
+*.log
+npm-debug.log*
+
+.vscode
