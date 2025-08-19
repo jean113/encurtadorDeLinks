@@ -25,7 +25,10 @@ export const excluir: FastifyPluginAsyncZod = async server => {
         const { id } = request.params;
 
         // excluindo do banco
-        await db.delete(links).where(eq(links.id, id));
+        const linksExcluidos = await db.delete(links).where(eq(links.id, id)).returning({ idExcluido: links.id });
+
+        if (linksExcluidos.length === 0) 
+            return reply.status(400).send({ message: 'O link com este ID não foi encontrado.' });
 
         return reply.status(201).send('Link excluído com sucesso!');
     })

@@ -2,6 +2,7 @@ import { db } from '@/infra/db'
 import { links } from '@/infra/db/schemas/links'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
+import { eq } from 'drizzle-orm'
 
 
 export const inserir: FastifyPluginAsyncZod = async server => {
@@ -23,6 +24,14 @@ export const inserir: FastifyPluginAsyncZod = async server => {
     {
         // extração dos dados da requisição
         const { original, encurtado } = request.body;
+
+        const id = await db.select({
+            id: links.id,
+        }).from(links).where(eq(links.encurtado, encurtado));
+
+        if(id.length > 0) {
+            return reply.status(400).send({ message: "Essa URL encurtada já existe!" });
+        }
 
         // gravando no banco
         const [novoLink] = await db.insert(links).values({

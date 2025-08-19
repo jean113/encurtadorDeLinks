@@ -32,7 +32,10 @@ export const incrementarAcessos: FastifyPluginAsyncZod = async server => {
         acesso = acesso + 1;
 
         // atualizando do banco
-        await db.update(links).set({ acesso }).where(eq(links.id, id));
+        const linksAtualizados = await db.update(links).set({ acesso }).where(eq(links.id, id)).returning();
+
+          if (linksAtualizados.length === 0) 
+            return reply.status(400).send({ message: 'O link a ser atualizado não foi encontrado.' });
 
         // recuperar a qtd de acessos do link atualizada de acordo com id
         const [recuperarLinkAtualizado] = await db.select({ acesso: links.acesso }).from(links).where(eq(links.id, id));

@@ -20,7 +20,6 @@ export const recuperar: FastifyPluginAsyncZod = async server => {
                         })
                     )
                 }),
-                400: z.object({ message: z.string() }),
           },
         }
     },
@@ -32,7 +31,7 @@ export const recuperar: FastifyPluginAsyncZod = async server => {
             original: links.original,
             encurtado: links.encurtado,
             acesso: links.acesso,
-        }).from(links)
+        }).from(links).orderBy(links.encurtado);
 
         return reply.status(201).send({ linksRecuperados: recuperarLinks });
     })
