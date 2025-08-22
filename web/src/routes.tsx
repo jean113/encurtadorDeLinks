@@ -1,21 +1,20 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { AppLayout } from './pages/_layouts/app'
-import { Principal } from './pages/app/Principal'
+import { Principal } from './pages/Principal'
 import { Error } from './pages/error'
 import { NotFound } from './pages/404'
+import { Redirecionamento } from './components/redirecionamento'
 
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <AppLayout />,
+    element: <Principal />,
     errorElement: <Error />,
-    children: [
-      {
-        path: '/',
-        element: <Principal />,
-      },
-    ],
+  },
+   {
+    path: '/:encurtado',
+    element: <Redirecionamento />,
+    errorElement: <NotFound />,
   },
   {
     path: '*',

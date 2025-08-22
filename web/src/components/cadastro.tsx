@@ -29,24 +29,23 @@ type Link = {
 type LinksForm = z.infer<typeof linksForm>
 
 interface CadastroProps {
-  links: Link[];
-  onLinkAdicionado: () => void;
+  atualizarLista: () => void;
 }
 
-export function Cadastro({ links, onLinkAdicionado }: CadastroProps) {
+export function Cadastro({ atualizarLista }: CadastroProps) {
       const { register, handleSubmit, formState: { isSubmitting, errors }} = useForm<LinksForm>({
         resolver: zodResolver(linksForm),
       });
 
       const houveErro = !!errors.original;
 
-      const { host } = window.location;
-
       const gravarLinks: SubmitHandler<LinksForm> = async (data) => {
         try {
-          await api.post('/inserir', { original: data.original, encurtado: host + '/' + data.encurtado });
-          onLinkAdicionado();
-        } catch (error) {
+          await api.post('/inserir', { original: data.original, encurtado: data.encurtado });
+          atualizarLista();
+        } 
+        catch (error) 
+        {
           if (error instanceof AxiosError && error.response) 
           {
             const serverMessage = error.response.data.message;

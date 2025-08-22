@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Cadastro } from "../../components/cadastro";
-import { Listagem } from "../../components/listagem";
-import { api } from '../../lib/axios';
+import { Cadastro } from "../components/cadastro";
+import { Listagem } from "../components/listagem";
+import { api } from '../lib/axios';
 import { toast } from 'sonner';
 
 type Link = {
@@ -17,8 +17,8 @@ export function Principal() {
     async function carregarLinks() {
       try 
       {
-          const response = await api.get('/recuperar');
-          setLinks(response.data.linksRecuperados);
+        const response = await api.get('/recuperar');
+        setLinks(response.data.linksRecuperados);
       } catch (error) {
           toast.error("Erro ao buscar os links: " + error);
       }
@@ -30,8 +30,8 @@ export function Principal() {
     
   return(
     <main className="bg-gray-300 h-dvh flex items-center justify-center p-10 gap-x-8">
-      <Cadastro links={links} onLinkAdicionado={carregarLinks}/>
-      <Listagem links={links} refreshLista={carregarLinks} />
+      <Cadastro atualizarLista={carregarLinks}/>
+      <Listagem links={links} atualizarLista={carregarLinks} />
     </main>
   )
 }
