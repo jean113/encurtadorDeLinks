@@ -4,21 +4,24 @@ import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { AxiosError } from 'axios';
+import { useLinks } from '../contexts/LinksContext'; 
 
-type Link = {
-  id: string;
-  original: string;
-  encurtado: string;
-  acesso: number;
-};
+// type Link = {
+//   id: string;
+//   original: string;
+//   encurtado: string;
+//   acesso: number;
+// };
 
-interface ListagemProps {
-  links: Link[];
-  atualizarLista: () => void;
-}
+// interface ListagemProps {
+//   links: Link[];
+//   atualizarLista: () => void;
+// }
 
-export function Listagem({ links, atualizarLista }: ListagemProps) {
+export function Listagem() {
   const [estaExportando, setEstaExportando] = useState(false);
+
+  const { links, carregarLinks } = useLinks();
 
   const handleDelete = async (id: string) => {
 
@@ -40,7 +43,7 @@ export function Listagem({ links, atualizarLista }: ListagemProps) {
 
       toast.success('Link excluído com sucesso!');
 
-      atualizarLista();
+      carregarLinks();
 
     } catch (error) {
       toast.error("Não foi possível excluir o link. " + error);
@@ -58,7 +61,7 @@ export function Listagem({ links, atualizarLista }: ListagemProps) {
   const incrementarAcesso = async (id: string) => {
     try {
       await api.get(`/acessos/${id}`);
-      atualizarLista();
+      carregarLinks();
     } catch (error) {
       console.error('Erro ao incrementar acesso:', error);
       toast.error("Houve algum erro ao contabilizar o acesso a este link. " + error);

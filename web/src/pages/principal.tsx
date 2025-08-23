@@ -12,26 +12,26 @@ type Link = {
 };
 
 export function Principal() {
-  const [links, setLinks] = useState<Link[]>([]);
+  // const [links, setLinks] = useState<Link[]>([]);
   
-    async function carregarLinks() {
-      try 
-      {
-        const response = await api.get('/recuperar');
-        setLinks(response.data.linksRecuperados);
-      } catch (error) {
-          toast.error("Erro ao buscar os links: " + error);
-      }
-    }
+  //   async function carregarLinks() {
+  //     try 
+  //     {
+  //       const response = await api.get('/recuperar');
+  //       setLinks(response.data.linksRecuperados);
+  //     } catch (error) {
+  //         toast.error("Erro ao buscar os links: " + error);
+  //     }
+  //   }
   
-    useEffect(() => {
-      carregarLinks();
-    }, []); 
+  //   useEffect(() => {
+  //     carregarLinks();
+  //   }, []); 
     
   return(
     <main className="bg-gray-300 h-dvh flex items-center justify-center p-10 gap-x-8">
-      <Cadastro atualizarLista={carregarLinks}/>
-      <Listagem links={links} atualizarLista={carregarLinks} />
+      <Cadastro/>
+      <Listagem />
     </main>
   )
 }

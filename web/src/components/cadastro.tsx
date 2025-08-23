@@ -6,6 +6,7 @@ import { WarningIcon } from '@phosphor-icons/react';
 import { cn } from '../lib/utils';
 import { toast } from 'sonner';
 import { AxiosError } from 'axios';
+import { useLinks } from '../contexts/LinksContext'; 
 
 const linksForm = z.object({
   original: z.string().refine(url => {
@@ -19,30 +20,32 @@ const linksForm = z.object({
   encurtado: z.string().regex(/^[a-z0-9]+$/, { message: "Informe uma url minúscula e sem espaco/caracter especial."}),
 })
 
-type Link = {
-  id: string;
-  original: string;
-  encurtado: string;
-  acesso: number;
-};
+// type Link = {
+//   id: string;
+//   original: string;
+//   encurtado: string;
+//   acesso: number;
+// };
 
 type LinksForm = z.infer<typeof linksForm>
 
-interface CadastroProps {
-  atualizarLista: () => void;
-}
+// interface CadastroProps {
+//   atualizarLista: () => void;
+// }
 
-export function Cadastro({ atualizarLista }: CadastroProps) {
+export function Cadastro() {
       const { register, handleSubmit, formState: { isSubmitting, errors }} = useForm<LinksForm>({
         resolver: zodResolver(linksForm),
       });
 
       const houveErro = !!errors.original;
 
+      const { carregarLinks } = useLinks();
+
       const gravarLinks: SubmitHandler<LinksForm> = async (data) => {
         try {
           await api.post('/inserir', { original: data.original, encurtado: data.encurtado });
-          atualizarLista();
+          carregarLinks();
         } 
         catch (error) 
         {

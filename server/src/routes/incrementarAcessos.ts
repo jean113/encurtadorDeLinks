@@ -1,6 +1,6 @@
 import { db } from '@/infra/db'
 import { links } from '@/infra/db/schemas/links'
-import { eq } from 'drizzle-orm'
+import { eq, sql } from 'drizzle-orm'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
@@ -25,14 +25,14 @@ export const incrementarAcessos: FastifyPluginAsyncZod = async server => {
         const { id } = request.params;
 
         // recuperar acesso do link de acordo com id
-        const [recuperarLink] = await db.select({ acesso: links.acesso }).from(links).where(eq(links.id, id));
+        // const [recuperarLink] = await db.select({ acesso: links.acesso }).from(links).where(eq(links.id, id));
 
-        let { acesso } = recuperarLink;
+        // let { acesso } = recuperarLink;
 
-        acesso = acesso + 1;
+        // acesso = acesso + 1;
 
         // atualizando do banco
-        const linksAtualizados = await db.update(links).set({ acesso }).where(eq(links.id, id)).returning();
+        const linksAtualizados = await db.update(links).set({  acesso: sql`${links.acesso} + 1` }).where(eq(links.id, id)).returning();
 
           if (linksAtualizados.length === 0) 
             return reply.status(400).send({ message: 'O link a ser atualizado não foi encontrado.' });

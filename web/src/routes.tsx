@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { Principal } from './pages/Principal'
+import { Principal } from './pages/principal'
 import { Error } from './pages/error'
 import { NotFound } from './pages/404'
 import { Redirecionamento } from './components/redirecionamento'
