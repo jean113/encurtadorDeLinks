@@ -1,6 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
 import { Principal } from './pages/principal'
-import { Error } from './pages/error'
 import { NotFound } from './pages/404'
 import { Redirecionamento } from './components/redirecionamento'
 
@@ -9,12 +8,16 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <Principal />,
-    errorElement: <Error />,
+    errorElement: <NotFound />,
   },
-   {
+  {
     path: '/:encurtado',
     element: <Redirecionamento />,
     errorElement: <NotFound />,
+  },
+  {
+    path: '/404',
+    element: <NotFound />,
   },
   {
     path: '*',

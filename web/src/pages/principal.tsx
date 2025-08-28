@@ -1,37 +1,19 @@
-import { useEffect, useState } from "react";
 import { Cadastro } from "../components/cadastro";
 import { Listagem } from "../components/listagem";
-import { api } from '../lib/axios';
-import { toast } from 'sonner';
-
-type Link = {
-  id: string;
-  original: string;
-  encurtado: string;
-  acesso: number;
-};
+import LogoImageUrl from "../assets/logo.svg?url";
 
 export function Principal() {
-  // const [links, setLinks] = useState<Link[]>([]);
-  
-  //   async function carregarLinks() {
-  //     try 
-  //     {
-  //       const response = await api.get('/recuperar');
-  //       setLinks(response.data.linksRecuperados);
-  //     } catch (error) {
-  //         toast.error("Erro ao buscar os links: " + error);
-  //     }
-  //   }
-  
-  //   useEffect(() => {
-  //     carregarLinks();
-  //   }, []); 
-    
   return(
-    <main className="bg-gray-300 h-dvh flex items-center justify-center p-10 gap-x-8">
-      <Cadastro/>
-      <Listagem />
+    <main className="min-h-screen bg-gray-300 flex items-center justify-center p-4">
+      <div className="flex flex-col items-center gap-y-8">
+        <div className="w-full flex justify-start pr-10"> 
+          <img src={LogoImageUrl} alt="Logo" className="w-[97px] h-[24px]"/>
+        </div>
+        <div className="flex gap-x-8">
+          <Cadastro/>
+          <Listagem />
+        </div>
+      </div>
     </main>
   )
 }

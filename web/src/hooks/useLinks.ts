@@ -101,7 +101,7 @@ export function useincrementarAcessosMutation() {
       queryClient.invalidateQueries({ queryKey: ['links'] });
     },
     onError: (error) => {
-      toast.error("Houve algum erro ao contabilizar o acesso a este link. " + error);
+      toast.error("Houve algum erro ao incrementar o acesso a este link. " + error);
     }
   });
 }
