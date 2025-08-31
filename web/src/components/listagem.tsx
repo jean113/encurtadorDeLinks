@@ -77,7 +77,7 @@ export function Listagem() {
 
   return (
     <> 
-      <div className="bg-white w-[580px] min-h-[340px] p-[32px] rounded-[8px]">
+      <div className="bg-white w-[366px] h-[316px] p-[24px] md:w-full md:min-h-[340px] md:p-[32px] rounded-[8px]">
         <div className='flex items-center justify-between'>
           <div className="text-lg font-bold">Meus links:</div>
           <button onClick={handleExportAndDownload} disabled={!links || links.length <= 0}
@@ -95,13 +95,13 @@ export function Listagem() {
                 links.map((link) =>  
                   <div key={link.id}> 
                       <hr className="my-4 border-gray-300"></hr>
-                      <div className='flex items-center justify-between gap-x-20'>
-                        <div className='flex flex-col'>
-                          <Link to={link.original} onClick={() => handleIncrementarAcessos(link.id)} target="_blank" className='font-semibold text-[#2c46b1]'>{host + '/' + link.encurtado}</Link>
-                          <span className='text-sm text-gray-500'>{link.original}</span>
+                      <div className='flex items-center gap-x-2'>
+                        <div className='flex flex-col flex-grow min-w-0 mr-auto'>
+                          <Link to={link.original} onClick={() => handleIncrementarAcessos(link.id)} target="_blank" className='truncate overflow-hidden whitespace-nowrap font-semibold text-[#2c46b1]' style={{ maxWidth: 'calc(100% - 10px)' }}>{host + '/' + link.encurtado}</Link>
+                          <span className='truncate overflow-hidden whitespace-nowrap text-sm text-gray-500' style={{ maxWidth: 'calc(100% - 10px)' }}>{link.original}</span>
                         </div>
-                        <div className='flex items-center'>
-                            <span className='text-sm text-gray-500 mr-8'>{link.acesso} acessos</span>
+                        <div className='flex items-center flex-shrink-0'>
+                            <span className='text-sm text-gray-500 mr-[6px] whitespace-nowrap'>{link.acesso} { link.acesso > 1 ? 'acessos' : 'acesso'}</span>
                             <button className='w-[32px] h-[32px] rounded-[8px] bg-gray-200 mr-2 flex items-center justify-center text-gray-600' onClick={() => handleCopyToClipboard(host + '/' + link.encurtado)}><CopyIcon size={16} /></button>
                             <button className='w-[32px] h-[32px] rounded-[8px] bg-gray-200 flex items-center justify-center text-gray-600' onClick={() => handleApagarLink(link.id)}><TrashIcon size={16} /></button>
                         </div>

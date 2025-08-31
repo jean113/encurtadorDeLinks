@@ -30,6 +30,8 @@ export function Cadastro() {
 
       const houveErro = !!errors.original;
 
+      const hasEncurtadoError = errors.encurtado;
+
       const createLinkMutation = useCreateLinkMutation();
 
       const gravarLinks: SubmitHandler<LinksForm> = async (data) => {
@@ -47,32 +49,49 @@ export function Cadastro() {
       };
 
       return (
-        <div className="bg-white w-[380px] min-h-[340px] p-[32px] rounded-[8px]">
+        <div className="bg-white w-[366px] min-h-[316px] md:w-full md:h-full p-[32px] rounded-[8px]">
           <div className="self-stretch justify-center text-lg font-bold leading-normal mb-4">Novo link</div>
           <form onSubmit={handleSubmit(gravarLinks)}>
             <div className='grid grid-rows-3 gap-4'>
               <div className='flex flex-col'>
                  
-                <label htmlFor="original" className={cn('text-xs', 'text-gray-500', 'pb-2')}>
+                <label htmlFor="original" className={cn('block text-xs font-medium pb-2', errors.original ? 'text-[#b12c4d]' : 'text-gray-500' )}>
                   Link original
                 </label>
                 <input 
                   placeholder='http://www.exemplo.com.br'
-                  className="peer px-[16px] h-[48px] border rounded-[8px] border-gray-300 focus:border-[#2c46b1] focus:outline-none" 
+                  className={`peer px-[16px] h-[48px] border rounded-[8px] ${
+                    errors.original 
+                      ? 'border-[#b12c4d] focus:border-[#b12c4d]'
+                      : 'border-gray-300 focus:border-[#2c46b1]'
+                  } focus:outline-none`} 
                   type="text" id="original" {...register('original')}/>
                   {errors.original && 
-                    <div className='flex items-center gap-[5px] mt-[4px] text-sm text-gray-500'> 
+                    <div className='flex items-center text-xs text-gray-500 mt-[4px]'> 
                       <WarningIcon className='text-[#b12c4d]' size={16} /> 
                       <span>{errors.original.message}</span>
                     </div>
                   }
               </div>
               <div className='flex flex-col'>
-                <label htmlFor="encurtado" className={cn('text-xs', 'text-gray-500', 'pb-2')}>
+                <label htmlFor="encurtado" 
+                  className={cn('block text-xs font-medium pb-2',  hasEncurtadoError ? 'text-[#b12c4d]' : 'text-gray-500')}
+                >
                   Link encurtado
                 </label>
-                <div className={cn("flex items-center px-[16px] h-[48px] border rounded-[8px] border-gray-300 transition-colors","focus-within:border-[#2c46b1]")}>
-                  <span className="text-gray-500">
+                 <div 
+                className={cn(
+                  "flex items-center px-[16px] h-[48px] border rounded-[8px] transition-colors", hasEncurtadoError 
+                    ? 'border-[#b12c4d]'
+                    : 'border-gray-300 focus-within:border-[#2c46b1]'
+                )}
+              >
+                   <span 
+                    className={cn(
+                      "text-base",
+                      hasEncurtadoError ? 'text-[#b12c4d]' : 'text-gray-500 focus-within:text-[#2c46b1]'
+                    )}
+                  >
                     brev.ly/
                   </span>
                   <input 
@@ -81,7 +100,7 @@ export function Cadastro() {
                     type="text" id="encurtado" {...register('encurtado')}/>
                 </div>
                 {errors.encurtado && 
-                  <div className='flex items-center gap-[5px] mt-[4px] text-sm text-gray-500'> 
+                  <div className='flex items-center text-xs text-gray-500 mt-[4px]'> 
                     <WarningIcon className='text-[#b12c4d]' size={16} /> 
                     <span>{errors.encurtado.message}</span>
                   </div>
